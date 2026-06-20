@@ -1,0 +1,4 @@
+prune tests
+exclude pyproject.toml.bak
+global-exclude *.pyc
+global-exclude __pycache__

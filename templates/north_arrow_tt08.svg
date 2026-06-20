@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 240">
+  <text x="40" y="16" text-anchor="middle" font-family="Times New Roman" font-size="13" font-weight="700" fill="#18181b">N</text>
+  <path d="M40 20 L52 112 L40 101 L28 112 Z" fill="#f4f4f5" stroke="#18181b" stroke-width="2"/>
+  <path d="M40 20 L40 101 L28 112 Z" fill="#18181b"/>
+  <circle cx="40" cy="135" r="25" fill="#ffffff" stroke="#18181b" stroke-width="2.2"/>
+  <circle cx="40" cy="135" r="19" fill="#facc15" stroke="#52525b" stroke-width="1.2"/>
+  <path d="M40 119 L44 131 L56 135 L44 139 L40 151 L36 139 L24 135 L36 131 Z" fill="#fafafa" stroke="#18181b" stroke-width="1.2"/>
+  <circle cx="40" cy="135" r="3.3" fill="#18181b"/>
+  <path d="M40 160 L52 219 L40 210 L28 219 Z" fill="#f4f4f5" stroke="#18181b" stroke-width="2"/>
+  <path d="M40 160 L40 210 L28 219 Z" fill="#18181b"/>
+</svg>

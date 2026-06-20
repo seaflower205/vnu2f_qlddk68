@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- Stacked Database cylinders -->
+  <!-- Top Cylinder -->
+  <path d="M6,8 C6,5.8 10.5,4 16,4 C21.5,4 26,5.8 26,8 L26,13 C26,15.2 21.5,17 16,17 C10.5,17 6,15.2 6,13 Z" fill="#1a73e8"/>
+  <ellipse cx="16" cy="8" rx="10" ry="4" fill="#669df6"/>
+  
+  <!-- Middle Cylinder -->
+  <path d="M6,14 C6,11.8 10.5,10 16,10 C21.5,10 26,11.8 26,14 L26,19 C26,21.2 21.5,23 16,23 C10.5,23 6,21.2 6,19 Z" fill="#185abc"/>
+  <ellipse cx="16" cy="14" rx="10" ry="4" fill="#1a73e8"/>
+  
+  <!-- Bottom Cylinder -->
+  <path d="M6,20 C6,17.8 10.5,16 16,16 C21.5,16 26,17.8 26,20 L26,25 C26,27.2 21.5,29 16,29 C10.5,29 6,27.2 6,25 Z" fill="#1557b0"/>
+  <ellipse cx="16" cy="20" rx="10" ry="4" fill="#185abc"/>
+  
+  <!-- Gear (Sync/Settings) overlay on the bottom right -->
+  <circle cx="24" cy="24" r="5" fill="#34a853"/>
+  <!-- Small inner circle -->
+  <circle cx="24" cy="24" r="2" fill="#ffffff"/>
+  <!-- Teeth -->
+  <rect x="23" y="18" width="2" height="12" rx="0.5" fill="#34a853" transform="rotate(0 24 24)"/>
+  <rect x="23" y="18" width="2" height="12" rx="0.5" fill="#34a853" transform="rotate(45 24 24)"/>
+  <rect x="23" y="18" width="2" height="12" rx="0.5" fill="#34a853" transform="rotate(90 24 24)"/>
+  <rect x="23" y="18" width="2" height="12" rx="0.5" fill="#34a853" transform="rotate(135 24 24)"/>
+  <!-- Re-draw inner circle for neatness -->
+  <circle cx="24" cy="24" r="2.2" fill="#ffffff"/>
+</svg>

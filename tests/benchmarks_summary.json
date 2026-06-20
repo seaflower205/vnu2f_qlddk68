@@ -1,0 +1,21 @@
+{
+  "crs_registration": {
+    "status": "SUCCESS",
+    "duration_ms": 5.91,
+    "provinces_total": 63,
+    "message": "\u0110\u0103ng k\u00fd th\u00e0nh c\u00f4ng h\u1ec7 t\u1ecda \u0111\u1ed9 63 t\u1ec9nh th\u00e0nh Vi\u1ec7t Nam t\u1eeb t\u00e0i nguy\u00ean t\u00edch h\u1ee3p s\u1eb5n."
+  },
+  "coordinate_conversions": {
+    "status": "SUCCESS",
+    "count": 10000,
+    "duration_ms": 42.14,
+    "avg_per_conversion_ms": 0.0042
+  },
+  "geometry_accuracy": {
+    "status": "SUCCESS",
+    "area_before": 1.0,
+    "area_after": 1.0,
+    "delta_percent": 0.0,
+    "threshold_percent": 0.001
+  }
+}

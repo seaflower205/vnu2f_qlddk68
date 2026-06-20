@@ -1,0 +1,26 @@
+{
+  "MOC_TOA_DO": {
+    "name_vi": "Mốc tọa độ quốc gia",
+    "group": "Mốc đo đạc",
+    "fill_color": "#ff0000",
+    "border_width_mm": 3.0,
+    "pattern": "cross",
+    "source": "Quy định chuẩn"
+  },
+  "MOC_DIA_GIOI": {
+    "name_vi": "Mốc địa giới hành chính",
+    "group": "Mốc đo đạc",
+    "fill_color": "#000000",
+    "border_width_mm": 2.5,
+    "pattern": "circle",
+    "source": "Quy định chuẩn"
+  },
+  "DIEM_DO": {
+    "name_vi": "Điểm đo chi tiết",
+    "group": "Mốc đo đạc",
+    "fill_color": "#00aa00",
+    "border_width_mm": 1.0,
+    "pattern": "circle",
+    "source": "Quy định chuẩn"
+  }
+}

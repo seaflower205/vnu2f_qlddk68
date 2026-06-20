@@ -1,0 +1,305 @@
+/* Stats Grid (Hiển thị con số tổng quan sạch sẽ không viền cứng) */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  background-color: var(--bg-surface);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  flex-shrink: 0; /* Ngăn chặn co rụt flexbox */
+  min-height: 78px; /* Bảo vệ chiều cao tối thiểu tránh bị bóp nghẹt khi nội dung biểu đồ phình to */
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4) var(--space-2);
+  text-align: center;
+  position: relative;
+}
+
+.stat-item:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 25%;
+  height: 50%;
+  width: 1px;
+  background-color: var(--border-subtle);
+}
+
+.stat-value {
+  font-size: var(--text-2xl);
+  font-weight: 800;
+  color: var(--text-main);
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+}
+
+.stat-label {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin-top: var(--space-2);
+  letter-spacing: 0.05em;
+}
+
+/* Sections/Dividers */
+.section-title {
+  font-size: var(--text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: var(--space-3);
+  letter-spacing: 0.05em;
+}
+
+/* Card Panel chung cho biểu đồ và dữ liệu */
+.chart-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-2) 0;
+  flex-shrink: 0; /* Ngăn chặn co rụt flexbox */
+}
+
+/* Biểu đồ tròn và hộp chi tiết tương ứng */
+.chart-container-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  width: 100%;
+}
+
+.chart-info-box {
+  width: 100%;
+  background-color: var(--bg-app);
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--text-sm);
+  line-height: 1.4;
+  border: 1px solid var(--border-subtle);
+  min-height: 70px;
+}
+
+.chart-info-head {
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: var(--space-1);
+}
+
+.chart-info-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-2);
+  margin-top: var(--space-2);
+  border-top: 1px dashed var(--border-subtle);
+  padding-top: var(--space-2);
+}
+
+.info-cell {
+  display: flex;
+  flex-direction: column;
+}
+
+.info-cell b {
+  font-size: var(--text-sm);
+  color: var(--text-main);
+  font-weight: 700;
+}
+
+.info-cell small {
+  font-size: 10px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+/* Chi tiết thửa đất (Trong Tab Details) */
+.parcel-details-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  min-height: 100%;
+  flex-shrink: 0;
+}
+
+.parcel-header {
+  padding: var(--space-4) var(--space-5);
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-3);
+  flex-shrink: 0;
+}
+
+.parcel-title-wrap {
+  display: flex;
+  flex-direction: column;
+}
+
+.parcel-title-wrap p {
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 2px;
+}
+
+.parcel-title-wrap h2 {
+  font-size: var(--text-xl);
+  font-weight: 800;
+  color: var(--text-main);
+  letter-spacing: -0.02em;
+}
+
+.parcel-badge {
+  padding: var(--space-1) var(--space-3);
+  background-color: var(--bg-hover);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-full);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  color: var(--text-main);
+  flex-shrink: 0;
+}
+
+/* Thẻ chi tiết rời rạc bo tròn - Cal.com/Plane.so style */
+.parcel-details {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
+  border-radius: 0;
+  overflow: visible;
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-3) var(--space-5);
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  font-size: var(--text-sm);
+  flex-shrink: 0;
+}
+
+.detail-row dt {
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.detail-row dd {
+  color: var(--text-main);
+  font-weight: 700;
+  text-align: right;
+  word-break: break-word;
+}
+
+/* Các nút điều hướng nhanh trong tab */
+.parcel-actions {
+  display: flex;
+  gap: var(--space-3);
+  margin-top: auto;
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--border-subtle);
+  flex-shrink: 0;
+}
+
+/* Trạng thái trống (Empty State) */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: var(--space-10) var(--space-4);
+  color: var(--text-muted);
+  height: 100%;
+}
+
+.empty-state svg {
+  width: 48px;
+  height: 48px;
+  color: var(--border-subtle);
+  margin-bottom: var(--space-4);
+  stroke-width: 1.5;
+}
+
+.empty-state h3 {
+  font-size: var(--text-base);
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: var(--space-1);
+}
+
+.empty-state p {
+  font-size: var(--text-xs);
+  max-width: 200px;
+  line-height: 1.4;
+}
+
+/* Hộp thống kê nhanh kết quả tìm kiếm */
+.search-summary-box {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  background-color: var(--bg-surface);
+  padding: var(--space-3) var(--space-4);
+  box-shadow: var(--shadow-sm);
+  gap: var(--space-3);
+  flex-shrink: 0;
+}
+
+.summary-cell {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.summary-cell:first-child {
+  position: relative;
+}
+
+.summary-cell:first-child::after {
+  content: '';
+  position: absolute;
+  right: -8px;
+  top: 15%;
+  height: 70%;
+  width: 1px;
+  background-color: var(--border-subtle);
+}
+
+.summary-cell small {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 2px;
+}
+
+.summary-cell strong {
+  font-size: var(--text-base);
+  font-weight: 800;
+  color: var(--text-main);
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}

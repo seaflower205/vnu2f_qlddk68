@@ -1,0 +1,35 @@
+name: QGIS Plugin QA CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  test-qgis:
+    runs-on: ubuntu-latest
+    container:
+      image: qgis/qgis:4.0-trixie
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install system dependencies
+        run: |
+          apt-get update && apt-get install -y xvfb python3-pip
+
+      - name: Install Python dependencies
+        run: |
+          python3 -m pip install --upgrade pip
+          python3 -m pip install pytest pytest-qgis shapely ezdxf openpyxl
+
+      - name: Check architecture dependency graph
+        run: |
+          python3 tools/analyze_code_graph.py --check --no-write
+
+      - name: Run tests with headless GUI (Xvfb)
+        run: |
+          xvfb-run --server-args="-screen 0 1024x768x24" pytest tests/ -v -s

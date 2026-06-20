@@ -1,0 +1,11 @@
+{
+  "parcel_tag": "ThuaDat",
+  "fields": {
+    "so_hieu_to_ban_do": "soHieuToBanDo",
+    "so_thu_tu_thua": "soThuTuThua",
+    "dien_tich": "dienTich",
+    "chu_su_dung": "hoTen",
+    "dia_chi": "diaChi",
+    "loai_dat": "loaiMucDichSuDungKiemKeId"
+  }
+}

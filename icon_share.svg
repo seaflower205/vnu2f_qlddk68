@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="100%" height="100%">
+  <!-- Background Cloud (Faint) -->
+  <path d="M8,18 A3,3 0 0,1 11,15 A4,4 0 0,1 18,12 A3,3 0 0,1 23,15 A2,2 0 0,1 25,17 A2,2 0 0,1 23,19 H9 A3,3 0 0,1 8,18 Z" fill="none" stroke="#64748b" stroke-width="1.2" stroke-opacity="0.25"/>
+  <!-- Sharing Box (Blue) -->
+  <path d="M8,18 V25 C8,26.1 8.9,27 10,27 H22 C23.1,27 24,26.1 24,25 V18" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round"/>
+  <!-- Sharing Arrow (Green) -->
+  <line x1="16" y1="21" x2="16" y2="8" stroke="#10b981" stroke-width="2" stroke-linecap="round"/>
+  <path d="M12,12 L16,7 L20,12" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

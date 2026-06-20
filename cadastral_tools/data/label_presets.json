@@ -1,0 +1,50 @@
+{
+  "Địa chính chuẩn": {
+    "expression_template": "coalesce({sothua}, '') || '\\n' || coalesce({ma_dat}, '') || '\\n' || coalesce(format_number({dientich}, 1), '') || ' m²'",
+    "scale_limit": 2000,
+    "font_family": "Arial",
+    "font_size_pt": 9,
+    "color": "#000000",
+    "buffer_enabled": true,
+    "buffer_color": "#FFFFFF",
+    "buffer_size": 1.0,
+    "conflict_resolution": true,
+    "placement_mode": 0
+  },
+  "Rút gọn": {
+    "expression_template": "coalesce({sothua}, '') || '-' || coalesce({ma_dat}, '')",
+    "scale_limit": 5000,
+    "font_family": "Arial",
+    "font_size_pt": 8,
+    "color": "#000000",
+    "buffer_enabled": true,
+    "buffer_color": "#FFFFFF",
+    "buffer_size": 0.8,
+    "conflict_resolution": true,
+    "placement_mode": 0
+  },
+  "Đầy đủ": {
+    "expression_template": "coalesce({sothua}, '') || '\\n' || coalesce({ma_dat}, '') || '\\n' || coalesce(format_number({dientich}, 1), '') || ' m²\\nTờ: ' || coalesce({to_ban_do}, '')",
+    "scale_limit": 2000,
+    "font_family": "Arial",
+    "font_size_pt": 9,
+    "color": "#000000",
+    "buffer_enabled": true,
+    "buffer_color": "#FFFFFF",
+    "buffer_size": 1.0,
+    "conflict_resolution": true,
+    "placement_mode": 0
+  },
+  "Tùy chỉnh": {
+    "expression_template": "{sothua}",
+    "scale_limit": 0,
+    "font_family": "Arial",
+    "font_size_pt": 9,
+    "color": "#000000",
+    "buffer_enabled": false,
+    "buffer_color": "#FFFFFF",
+    "buffer_size": 1.0,
+    "conflict_resolution": false,
+    "placement_mode": 0
+  }
+}

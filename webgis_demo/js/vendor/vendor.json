@@ -1,0 +1,27 @@
+{
+  "libraries": [
+    {
+      "name": "rbush",
+      "version": "3.0.1",
+      "source": "npm:rbush@3.0.1",
+      "runtime": "rbush.min.js",
+      "license": "MIT",
+      "license_file": "rbush.LICENSE",
+      "usage": "R-tree spatial index for fast WebGIS hit-testing and viewport queries."
+    },
+    {
+      "name": "@turf/turf",
+      "version": "6.5.0",
+      "source": "npm:@turf/turf@6.5.0",
+      "runtime": "turf.min.js",
+      "license": "MIT",
+      "license_file": "turf.LICENSE",
+      "usage": "Lazy-loaded geodesic distance and area measurement helpers."
+    }
+  ],
+  "update_notes": [
+    "Replace the runtime file and matching LICENSE file in this folder.",
+    "Update the version query string in webgis_demo/index.html or webgis_demo/js/measure.js.",
+    "Run tools/check_plugin.py and tools/package_plugin.py before sharing the plugin."
+  ]
+}

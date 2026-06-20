@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=61.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "topology-tools"
+version = "0.1.0"
+description = "A standalone Python library for geometry cleaning, line snapping, polygonization, and topology validation."
+readme = "README.md"
+requires-python = ">=3.8"
+license = "MIT"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+    "Topic :: Scientific/Engineering :: GIS",
+]
+dependencies = [
+    "shapely>=2.0",
+]
+
+[project.optional-dependencies]
+test = [
+    "pytest>=7.0",
+    "pytest-cov>=3.0",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["topology_tools*"]
+exclude = ["tests*", "scratch*"]
+
+[tool.setuptools.package-data]
+topology_tools = ["py.typed"]

@@ -1,0 +1,403 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>WebGIS Quản lý Thửa đất</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- CSS Modules -->
+    <link rel="stylesheet" href="css/variables.css?v=1.0.14" />
+    <link rel="stylesheet" href="css/reset.css?v=1.0.14" />
+    <link rel="stylesheet" href="css/layout.css?v=1.0.14" />
+    <link rel="stylesheet" href="css/components/button.css?v=1.0.14" />
+    <link rel="stylesheet" href="css/components/input.css?v=1.0.14" />
+    <link rel="stylesheet" href="css/components/card.css?v=1.0.14" />
+    <link rel="stylesheet" href="css/components/chart.css?v=1.0.14" />
+    <link rel="stylesheet" href="css/components/modal.css?v=1.0.14" />
+    <link rel="stylesheet" href="css/components/legend.css?v=1.0.14" />
+    
+    <!-- MapLibre GL JS -->
+    <link href="https://unpkg.com/maplibre-gl@4.5.2/dist/maplibre-gl.css" rel="stylesheet" />
+    <script src="https://unpkg.com/maplibre-gl@4.5.2/dist/maplibre-gl.js"></script>
+
+    <style>
+      .map-toolbar button.active {
+        background-color: rgba(96, 165, 250, 0.25) !important;
+        color: #60a5fa !important;
+        border: 1px solid #60a5fa !important;
+      }
+      body.theme-light .map-toolbar button.active {
+        background-color: rgba(37, 99, 235, 0.15) !important;
+        color: #2563eb !important;
+        border: 1px solid #2563eb !important;
+      }
+      .map-toolbar button {
+        transition: all 0.2s ease;
+      }
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+      .spinner {
+        border: 3px solid rgba(255, 255, 255, 0.1);
+        border-top: 3px solid #38bdf8 !important;
+        border-radius: 50%;
+        width: 24px;
+        height: 24px;
+        animation: spin 1s linear infinite;
+        margin: 0 auto;
+      }
+    </style>
+  </head>
+  <body class="theme-dark">
+    <div class="app-shell">
+      
+      <!-- 1. Sidebar Rail (Thanh điều hướng icon tối giản) -->
+      <aside class="sidebar-rail">
+        <div style="display: flex; flex-direction: column; align-items: center; width: 100%;">
+          <div class="rail-logo" title="VNU2F WebGIS">GIS</div>
+          <nav class="rail-tabs">
+            <button class="rail-tab-btn active" data-tab="dashboard" title="Tổng quan và Thống kê">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+            </button>
+            <button class="rail-tab-btn" data-tab="search" title="Tìm kiếm thửa đất">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            </button>
+            <button class="rail-tab-btn" data-tab="details" id="detailsTabBtn" title="Chi tiết thửa đất">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+            </button>
+            <button id="shareTabBtn" class="rail-tab-btn" data-tab="share" title="Chia sẻ bản đồ ra Internet">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+            </button>
+          </nav>
+        </div>
+        
+        <div class="rail-bottom" style="margin-bottom: var(--space-4);">
+          <button id="themeToggle" class="theme-switch-btn" title="Đổi giao diện">
+            <span class="theme-switch-thumb">
+              <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+              <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="M4.93 4.93l1.41 1.41"/><path d="M17.66 17.66l1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="M6.34 17.66l-1.41 1.41"/><path d="M19.07 4.93l-1.41 1.41"/></svg>
+            </span>
+          </button>
+        </div>
+      </aside>
+
+      <!-- 2. Sidebar Content (Bảng nội dung động của tab) -->
+      <aside class="sidebar-content">
+        <header class="content-header">
+          <h1 class="content-title" id="tabTitle">Tổng quan</h1>
+          <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 6px;">
+            <p id="datasetName" class="content-subtitle" style="margin-bottom: 0;">Layer QGIS · VN-2000</p>
+            <div id="visitorCounter" style="display: inline-flex;">
+              <img id="visitorBadge" src="" alt="Lượt xem" style="display: none; border-radius: 3px; height: 18px;" onload="this.style.display='inline-block';" />
+            </div>
+          </div>
+        </header>
+
+        <div class="tab-panels">
+          
+          <!-- Tab 1: Dashboard Panel -->
+          <div class="tab-panel active" id="panel-dashboard">
+            <!-- Thống kê tổng quan -->
+            <section class="stats-grid">
+              <div class="stat-item">
+                <span id="totalParcels" class="stat-value">0</span>
+                <small class="stat-label">Thửa</small>
+              </div>
+              <div class="stat-item">
+                <span id="totalArea" class="stat-value">0</span>
+                <small class="stat-label">ha</small>
+              </div>
+              <div class="stat-item">
+                <span id="landClassCount" class="stat-value">0</span>
+                <small class="stat-label">Mã đất</small>
+              </div>
+            </section>
+
+            <!-- Switcher dạng viên thuốc để chọn biểu đồ hiển thị -->
+            <div class="pill-switcher">
+              <div class="pill-btn active" data-chart="land">Cơ cấu loại đất</div>
+              <div class="pill-btn" data-chart="group">Nhóm sử dụng</div>
+            </div>
+
+            <!-- Panel biểu đồ Loại đất -->
+            <div class="chart-card" id="landChartWrap">
+              <div class="chart-container-wrap">
+                <div class="chart-container">
+                  <canvas id="landChart" class="chart-canvas" width="150" height="150"></canvas>
+                  <div class="chart-center">
+                    <strong id="chartTotal">0</strong>
+                    <span>thửa</span>
+                  </div>
+                </div>
+                <div id="landChartInfo" class="chart-info-box">
+                  <div class="chart-info-head">Chọn một lát biểu đồ</div>
+                  <span style="font-size: var(--text-xs); color: var(--text-muted);">Xem số thửa, diện tích và nhóm sử dụng đất.</span>
+                </div>
+              </div>
+              <div id="legend" class="legend-list"></div>
+            </div>
+
+            <!-- Panel biểu đồ Nhóm sử dụng đất (mặc định ẩn) -->
+            <div class="chart-card" id="groupChartWrap" style="display: none;">
+              <div class="chart-container-wrap">
+                <div class="chart-container">
+                  <canvas id="groupChart" class="chart-canvas" width="150" height="150"></canvas>
+                  <div class="chart-center">
+                    <strong id="groupChartTotal">0</strong>
+                    <span>nhóm</span>
+                  </div>
+                </div>
+                <div id="groupChartInfo" class="chart-info-box">
+                  <div class="chart-info-head">Chọn một nhóm đất</div>
+                  <span style="font-size: var(--text-xs); color: var(--text-muted);">Xem cơ cấu nhóm và các mã loại đất bên trong.</span>
+                </div>
+              </div>
+              <div id="groupLegend" class="legend-list legend-compact"></div>
+            </div>
+          </div>
+
+          <!-- Tab 2: Tìm kiếm Panel -->
+          <div class="tab-panel" id="panel-search">
+            <div class="input-wrapper">
+              <input id="searchInput" class="input-field" type="search" placeholder="Số thửa, chủ đất, mã loại..." />
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            </div>
+            
+            <!-- Hộp thống kê nhanh kết quả tìm kiếm -->
+            <div id="searchSummary" class="search-summary-box" style="display: none; margin-top: var(--space-3); margin-bottom: var(--space-1);">
+              <div class="summary-cell">
+                <small>Tổng số thửa</small>
+                <strong id="summaryCount">0</strong>
+              </div>
+              <div class="summary-cell">
+                <small>Tổng diện tích</small>
+                <strong id="summaryArea">0 m²</strong>
+              </div>
+            </div>
+            
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: var(--space-2); flex-shrink: 0;">
+              <span class="section-title" style="margin: 0;">Kết quả</span>
+              <span id="resultCount" style="font-size: var(--text-xs); font-weight: 700; color: var(--text-accent);">0</span>
+            </div>
+
+            <div id="resultList" class="result-list"></div>
+          </div>
+
+          <!-- Tab 3: Chi tiết thửa đất Panel -->
+          <div class="tab-panel" id="panel-details">
+            <!-- Trạng thái trống khi chưa chọn thửa -->
+            <div class="empty-state" id="detailsEmptyWrap">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+              <h3>Chưa chọn thửa đất</h3>
+              <p>Nhấp vào một thửa bất kỳ trên bản đồ hoặc trong danh sách kết quả để xem thuộc tính.</p>
+            </div>
+
+            <!-- Chi tiết thửa đất -->
+            <div class="parcel-details-wrap" id="detailsActiveWrap" style="display: none;">
+              <div class="parcel-header">
+                <div class="parcel-title-wrap">
+                  <p>Thửa đang chọn</p>
+                  <h2 id="parcelTitle">--</h2>
+                </div>
+                <span id="parcelType" class="parcel-badge">--</span>
+              </div>
+              
+              <dl id="parcelDetails" class="parcel-details"></dl>
+              
+              <div class="parcel-actions">
+                <button id="zoomToParcel" class="btn btn-primary" style="flex: 1;" type="button">Phóng tới</button>
+                <button id="clearSelection" class="btn btn-outline" style="flex: 1;" type="button">Bỏ chọn</button>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Tab 4: Chia sẻ Panel -->
+          <div class="tab-panel" id="panel-share">
+            <div style="display: flex; flex-direction: column; gap: var(--space-4);">
+              <div>
+                <h3 class="section-title" style="margin-top: 0; margin-bottom: var(--space-1); font-size: 14px; font-weight: 700;">Chia sẻ bản đồ WebGIS</h3>
+                <span style="font-size: var(--text-xs); color: var(--text-muted); display: block; line-height: 1.4;">
+                  Chia sẻ bản vẽ thửa đất sang thiết bị di động hoặc máy tính khác qua mạng nội bộ hoặc Internet.
+                </span>
+              </div>
+              
+              <!-- Local Network Sharing Section (Always available since server runs) -->
+              <div style="text-align: left; padding: var(--space-3); background-color: var(--bg-muted); border-radius: var(--radius-md); border: 1px solid var(--border); display: flex; flex-direction: column; gap: var(--space-2);">
+                <small class="stat-label" style="display: block; font-weight: 600; font-size: var(--text-xs); color: var(--text-muted);">1. Chia sẻ mạng nội bộ (LAN):</small>
+                <div style="display: flex; gap: var(--space-2);">
+                  <input id="txtLanShareUrl" class="input-field" type="text" readonly style="flex: 1; font-size: var(--text-xs); height: 32px;" placeholder="Đang tải link LAN..." />
+                  <button id="btnCopyLanShareUrl" class="btn btn-outline" style="padding: 0 10px; height: 32px; font-size: var(--text-xs);" type="button">Chép</button>
+                </div>
+                <button id="btnQrLanShare" class="btn btn-outline" style="width: 100%; height: 32px; font-size: var(--text-xs); display: flex; align-items: center; justify-content: center; gap: 6px;" type="button">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                  Hiện mã QR mạng LAN
+                </button>
+              </div>
+
+              <!-- Public Internet Sharing Section -->
+              <div style="display: flex; flex-direction: column; gap: var(--space-2);">
+                <small class="stat-label" style="display: block; font-weight: 600; font-size: var(--text-xs); color: var(--text-muted);">2. Chia sẻ qua Internet công khai:</small>
+                
+                <div id="share-inactive-view">
+                  <button id="btnStartShare" class="btn btn-primary" style="width: 100%; min-height: 38px; display: flex; align-items: center; justify-content: center; font-weight: 600;" type="button">
+                    Kích hoạt link công khai
+                  </button>
+                </div>
+                
+                <div id="share-active-view" style="display: none; display: flex; flex-direction: column; gap: var(--space-3);">
+                  <div style="text-align: left; padding: var(--space-3); background-color: var(--bg-muted); border-radius: var(--radius-md); border: 1px solid var(--border);">
+                    <small class="stat-label" style="display: block; margin-bottom: var(--space-2); font-weight: 600; font-size: var(--text-xs); color: var(--text-muted);">Đường dẫn công khai:</small>
+                    <div style="display: flex; gap: var(--space-2);">
+                      <input id="txtShareUrl" class="input-field" type="text" readonly style="flex: 1; font-size: var(--text-xs); height: 32px;" />
+                      <button id="btnCopyShareUrl" class="btn btn-outline" style="padding: 0 10px; height: 32px; font-size: var(--text-xs);" type="button">Chép</button>
+                    </div>
+                    <button id="btnQrPublicShare" class="btn btn-outline" style="width: 100%; height: 32px; font-size: var(--text-xs); margin-top: var(--space-2); display: flex; align-items: center; justify-content: center; gap: 6px;" type="button">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                      Hiện mã QR công khai
+                    </button>
+                  </div>
+                  
+                  <div style="text-align: left; padding: var(--space-3); background-color: var(--bg-muted); border-radius: var(--radius-md); border: 1px solid var(--border);">
+                    <small class="stat-label" style="display: block; margin-bottom: var(--space-2); font-weight: 600; font-size: var(--text-xs); color: var(--text-muted);">Khóa bảo mật (Passcode):</small>
+                    <div style="display: flex; gap: var(--space-2);">
+                      <input id="txtSharePasscode" class="input-field" type="text" readonly style="flex: 1; text-align: center; font-weight: bold; letter-spacing: 0.15em; font-size: 13px; height: 32px; background-color: var(--bg-surface);" />
+                      <button id="btnCopySharePasscode" class="btn btn-outline" style="padding: 0 10px; height: 32px; font-size: var(--text-xs);" type="button">Chép</button>
+                    </div>
+                  </div>
+                  
+                  <button id="btnStopShare" class="btn btn-danger" style="width: 100%; min-height: 38px; display: flex; align-items: center; justify-content: center; font-weight: 600; margin-top: var(--space-1);" type="button">
+                    Dừng chia sẻ
+                  </button>
+                </div>
+              </div>
+              
+              <div id="share-loading-view" style="display: none; text-align: center; padding: var(--space-5); background-color: var(--bg-muted); border-radius: var(--radius-md); border: 1px solid var(--border);">
+                <div class="spinner"></div>
+                <p style="font-size: var(--text-xs); color: var(--text-muted); margin-top: var(--space-3);">Đang thiết lập kết nối SSH Tunnel qua QGIS...</p>
+              </div>
+              
+              <div id="share-error-msg" style="display: none; color: #ef4444; font-size: var(--text-xs); padding: var(--space-2); border-radius: var(--radius-md); background-color: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.2); line-height: 1.4;"></div>
+            </div>
+          </div>
+          
+        </div>
+      </aside>
+
+      <!-- 3. Stage Map (Khu vực Bản vẽ chính) -->
+      <main class="map-stage">
+        <!-- Top Left Controls (Basemap & Quick Share) -->
+        <div class="map-top-left-controls">
+          <div class="basemap-control">
+            <select id="basemapSelect" class="basemap-select" title="Chọn bản đồ nền" aria-label="Chọn bản đồ nền"></select>
+          </div>
+          <button id="btnQuickShare" class="btn btn-primary" style="display: none; padding: 0 16px; height: 44px; font-weight: 700; border-radius: var(--radius-md); align-items: center; gap: 8px; box-shadow: var(--shadow-md); border: 1px solid rgba(255, 255, 255, 0.15);" type="button">
+            <span class="share-dot"></span>
+            <span id="quickShareText">Chia sẻ</span>
+          </button>
+        </div>
+
+        <!-- Zoom & Tools Dock nổi góc phải -->
+        <div class="map-toolbar">
+          <button id="zoomIn" class="btn btn-icon btn-sm btn-ghost" type="button" title="Phóng to">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </button>
+          <button id="zoomOut" class="btn btn-icon btn-sm btn-ghost" type="button" title="Thu nhỏ">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </button>
+          <button id="resetView" class="btn btn-icon btn-sm btn-ghost" type="button" title="Xem toàn bộ">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+          </button>
+          <div style="width: 100%; height: 1px; background-color: var(--border); margin: var(--space-1) 0;"></div>
+          <button id="toggle3D" class="btn btn-icon btn-sm btn-ghost" type="button" title="Xem 3D (Đùn thửa)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+          </button>
+          <button id="measureDist" class="btn btn-icon btn-sm btn-ghost" type="button" title="Đo khoảng cách">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="2" y1="22" x2="22" y2="2"></line><path d="M7 2l3 3M11 6l3 3M15 10l3 3M19 14l3 3"></path></svg>
+          </button>
+          <button id="measureArea" class="btn btn-icon btn-sm btn-ghost" type="button" title="Đo diện tích">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 22 8.5 17 21 7 21 2 8.5 12 2"></polygon></svg>
+          </button>
+          <button id="printMap" class="btn btn-icon btn-sm btn-ghost" type="button" title="Xuất ảnh bản đồ (PNG)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
+          </button>
+          <button id="btnMobileShare" class="btn btn-icon btn-sm btn-ghost" type="button" title="Chia sẻ lên di động (QR Code)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
+          </button>
+        </div>
+
+        <div id="mapgl"></div>
+        <canvas id="mapCanvas"></canvas>
+
+        <!-- Trạng thái mờ góc trái dưới -->
+        <div class="map-status">
+          <span id="mapStatus">Đang tải dữ liệu...</span>
+          <span>|</span>
+          <span id="coordStatus">VN-2000: --</span>
+        </div>
+
+        <div class="map-attribution">
+          © OpenStreetMap contributors
+        </div>
+      </main>
+    </div>
+
+    <!-- Search Modal (Sử dụng khi bấm tìm kiếm nâng cao từ QGIS, giữ nguyên tương thích) -->
+    <div id="searchModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="searchModalTitle">
+      <div class="modal-dialog">
+        <header class="modal-header">
+          <h2 id="searchModalTitle">Tra cứu thửa đất nâng cao</h2>
+          <button id="closeSearchModal" class="btn btn-ghost btn-icon" type="button" aria-label="Đóng">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </header>
+        <div class="modal-body">
+          <div class="search-large-row">
+            <div class="input-wrapper" style="flex: 1;">
+              <input id="modalSearchInput" class="input-field input-lg" type="search" placeholder="Nhập số thửa, chủ sử dụng, loại đất..." />
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            </div>
+            <button id="modalClearSearch" class="btn btn-outline" style="height: 44px;" type="button">Xóa</button>
+          </div>
+          <div style="font-size: var(--text-xs); font-weight: 700; color: var(--text-muted);">
+            <span id="modalResultCount">0 kết quả</span>
+          </div>
+          <div id="modalResultList" class="result-list modal-result-list"></div> <!-- Giữ ID cũ cho tương thích JS -->
+        </div>
+      </div>
+    </div>
+
+    <!-- QR Code Share Modal -->
+    <div id="qrModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="qrModalTitle" style="z-index: 10000;">
+      <div class="modal-dialog" style="max-width: 360px; text-align: center; margin: auto;">
+        <header class="modal-header">
+          <h2 id="qrModalTitle" style="font-size: 15px; font-weight: bold;">Quét mã QR trên điện thoại</h2>
+          <button id="closeQrModal" class="btn btn-ghost btn-icon" type="button" aria-label="Đóng">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </header>
+        <div class="modal-body" style="display: flex; flex-direction: column; align-items: center; gap: var(--space-3); padding: var(--space-4) var(--space-5);">
+          <div style="background-color: white; padding: 12px; border-radius: 8px; box-shadow: var(--shadow-sm); display: inline-flex; align-items: center; justify-content: center;">
+            <div id="qrContainer" style="width: 200px; height: 200px;"></div>
+          </div>
+          <p id="qrModalDesc" style="font-size: var(--text-xs); color: var(--text-muted); line-height: 1.4;">
+            Điện thoại và máy tính cần kết nối chung mạng Wi-Fi để chia sẻ cục bộ (LAN).
+          </p>
+          <div style="display: flex; width: 100%; gap: var(--space-2); margin-top: var(--space-2);">
+            <input id="txtQrUrl" class="input-field" type="text" readonly style="flex: 1; font-size: 11px; height: 32px;" />
+            <button id="btnCopyQrUrl" class="btn btn-outline" style="padding: 0 10px; height: 32px; font-size: var(--text-xs);" type="button">Chép</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="js/vendor/rbush.min.js?v=3.0.1"></script>
+    <script src="js/vendor/qrcode.min.js?v=1.0.0"></script>
+    <script type="module" src="js/app.js?v=1.0.14"></script>
+  </body>
+</html>

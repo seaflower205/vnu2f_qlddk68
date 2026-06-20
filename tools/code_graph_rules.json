@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "source_roots": [
+    "vnu2f_qlddk68.py",
+    "modules",
+    "cadastral_tools"
+  ],
+  "allowed_tools_prefixes": [
+    "tools/libraries/topology-tools/src/topology_tools",
+    "tools/libraries/vn_mapfont_converter/vn_mapfont_converter"
+  ],
+  "excluded_path_parts": [
+    "vendor",
+    "tests",
+    "scratch",
+    "__pycache__"
+  ],
+  "entry_modules": [
+    "vnu2f_qlddk68"
+  ],
+  "cycle_allowlist": [
+    [
+      "cadastral_tools.ai.qa_runner",
+      "cadastral_tools.ai.step1_topology",
+      "cadastral_tools.ai.step2_attributes",
+      "cadastral_tools.ai.step3_legal_audit"
+    ],
+    [
+      "modules.cadastral_importer.cad_reader",
+      "modules.cadastral_importer.dgn_reader"
+    ]
+  ],
+  "orphan_allowlist": [
+    "cadastral_tools.ai.audit_trail",
+    "cadastral_tools.core.label_manager",
+    "cadastral_tools.ui.color_row_widget",
+    "modules.common.error_reporter",
+    "modules.common.qgis_logging",
+    "modules.common.ui_layout",
+    "modules.common.ui_utils.combobox",
+    "modules.common.ui_utils.widgets",
+    "modules.common.widget_factory",
+    "modules.crs_converter.tabs.attribute_update_tab",
+    "modules.crs_converter.tabs.kml_tools.kml_builder",
+    "modules.crs_converter.tabs.kml_tools.kml_to_shp",
+    "modules.crs_converter.tabs.kml_tools.merge_builder",
+    "modules.crs_converter.tabs.plot_data_parser",
+    "modules.report_generator.templates.generate_templates",
+    "topology_tools.geometry_validator",
+    "topology_tools.line_cleaner",
+    "topology_tools.polygonizer",
+    "vn_mapfont_converter.font_utils"
+  ],
+  "forbidden_import_roots": [
+    "backup_modules_",
+    "scratch",
+    "tests",
+    "tools"
+  ],
+  "allowed_tools_modules": [
+    "topology_tools",
+    "vn_mapfont_converter"
+  ],
+  "required_public_api": {
+    "vnu2f_qlddk68": ["VNU2FQLDDK68Plugin", "classFactory"],
+    "modules.cadastral_importer.cad_reader": [
+      "CadImportResult",
+      "import_cad_to_memory_layers",
+      "open_cad_source_layers"
+    ],
+    "modules.cadastral_importer.sync_importer": [
+      "SyncImportResult",
+      "import_cadastral_group"
+    ],
+    "modules.webgis.exporter": ["export_layer_to_geojson"],
+    "cadastral_tools.core.symbology_manager": [
+      "apply_to_layer",
+      "build_fill_symbol",
+      "build_renderer"
+    ]
+  }
+}

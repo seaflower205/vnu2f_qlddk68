@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CadastralData>
+  <!-- 
+    Thửa đất 101: Tọa độ hình học khớp với diện tích hồ sơ (100.0 m2).
+    Hạn sai diện tích ở tỷ lệ 1:500 là Delta_P = 2.0 * 0.10 * sqrt(100) = 2.0 m2.
+    Độ chênh lệch thực tế = 0.0 m2 <= 2.0 m2 -> Trạng thái: OK.
+  -->
+  <ThuaDat>
+    <soHieuToBanDo>12</soHieuToBanDo>
+    <soThuTuThua>101</soThuTuThua>
+    <dienTich>100.0000</dienTich>
+    <hoTen>Nguyễn Văn A</hoTen>
+    <diaChi>Số 1 Đường Hoa, Phường B, Quận C</diaChi>
+    <loaiMucDichSuDungKiemKeId>ONT</loaiMucDichSuDungKiemKeId>
+    <HinhHoc>
+      <Diem x="0.0000" y="0.0000"/>
+      <Diem x="10.0000" y="0.0000"/>
+      <Diem x="10.0000" y="10.0000"/>
+      <Diem x="0.0000" y="10.0000"/>
+      <Diem x="0.0000" y="0.0000"/>
+    </HinhHoc>
+  </ThuaDat>
+
+  <!-- 
+    Thửa đất 102: Tọa độ hình học khớp với diện tích hồ sơ (150.0 m2).
+    Hạn sai diện tích ở tỷ lệ 1:500 là Delta_P = 2.0 * 0.10 * sqrt(150) = 2.45 m2.
+    Độ chênh lệch thực tế = 0.0 m2 <= 2.45 m2 -> Trạng thái: OK.
+  -->
+  <ThuaDat>
+    <soHieuToBanDo>12</soHieuToBanDo>
+    <soThuTuThua>102</soThuTuThua>
+    <dienTich>150.0000</dienTich>
+    <hoTen>Trần Thị B</hoTen>
+    <diaChi>Số 2 Đường Hoa, Phường B, Quận C</diaChi>
+    <loaiMucDichSuDungKiemKeId>CLN</loaiMucDichSuDungKiemKeId>
+    <HinhHoc>
+      <Diem x="10.0000" y="0.0000"/>
+      <Diem x="25.0000" y="0.0000"/>
+      <Diem x="25.0000" y="10.0000"/>
+      <Diem x="10.0000" y="10.0000"/>
+      <Diem x="10.0000" y="0.0000"/>
+    </HinhHoc>
+  </ThuaDat>
+
+  <!-- 
+    Thửa đất 103: Có diện tích hình học (100.0 m2) khác biệt lớn so với diện tích hồ sơ (105.0 m2).
+    Hạn sai diện tích ở tỷ lệ 1:500 là Delta_P = 2.0 * 0.10 * sqrt(100) = 2.0 m2.
+    Độ chênh lệch thực tế = |100.0 - 105.0| = 5.0 m2 > 2.0 m2 -> Trạng thái: WARNING.
+  -->
+  <ThuaDat>
+    <soHieuToBanDo>12</soHieuToBanDo>
+    <soThuTuThua>103</soThuTuThua>
+    <dienTich>105.0000</dienTich>
+    <hoTen>Lê Văn C</hoTen>
+    <diaChi>Số 3 Đường Hoa, Phường B, Quận C</diaChi>
+    <loaiMucDichSuDungKiemKeId>LUC</loaiMucDichSuDungKiemKeId>
+    <HinhHoc>
+      <Diem x="25.0000" y="0.0000"/>
+      <Diem x="35.0000" y="0.0000"/>
+      <Diem x="35.0000" y="10.0000"/>
+      <Diem x="25.0000" y="10.0000"/>
+      <Diem x="25.0000" y="0.0000"/>
+    </HinhHoc>
+  </ThuaDat>
+</CadastralData>

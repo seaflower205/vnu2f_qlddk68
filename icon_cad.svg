@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="100%" height="100%">
+  <!-- Cadastral Parcels Grid (Bottom-Left) -->
+  <!-- Top Parcel (Yellow) -->
+  <polygon points="4,22 13,19 22,22 18,14 8,14" fill="#fef7e0" stroke="#fbbc05" stroke-width="1.8" stroke-linejoin="round"/>
+  <!-- Left Parcel (Blue) -->
+  <polygon points="4,22 13,19 13,28 4,28" fill="#e8f0fe" stroke="#1a73e8" stroke-width="1.8" stroke-linejoin="round"/>
+  <!-- Right Parcel (Green) -->
+  <polygon points="13,19 22,22 22,28 13,28" fill="#e6f4ea" stroke="#34a853" stroke-width="1.8" stroke-linejoin="round"/>
+
+  <!-- CAD / Import File Document (Top-Right) -->
+  <!-- Page background & border -->
+  <path d="M19,3 H27 A2,2 0 0,1 29,5 V15 A2,2 0 0,1 27,17 H19 A2,2 0 0,1 17,15 V5 A2,2 0 0,1 19,3 Z" fill="#ffffff" stroke="#475569" stroke-width="1.8" stroke-linejoin="round"/>
+  <!-- Page Lines (CAD vector symbol style) -->
+  <path d="M20,6 L26,6 M20,9 L24,9 M20,12 L25,12" stroke="#94a3b8" stroke-width="1.5" stroke-linecap="round"/>
+  <!-- Folded corner effect -->
+  <path d="M26,3 L29,6 H26 V3" fill="#cbd5e1" stroke="#475569" stroke-width="1" stroke-linejoin="round"/>
+
+  <!-- Import Arrow (Amber / Orange) showing data flow -->
+  <!-- Curved flow line -->
+  <path d="M21,14 C19,16 16,17 13,18" fill="none" stroke="#f59e0b" stroke-width="2.2" stroke-linecap="round"/>
+  <!-- Arrowhead pointing down-left to parcels -->
+  <path d="M16.5,19 L12,18.5 L14,14 Z" fill="#f59e0b"/>
+</svg>

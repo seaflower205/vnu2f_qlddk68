@@ -1,0 +1,461 @@
+/* App Shell - Lưới 3 cột Double-Sidebar */
+.app-shell {
+  display: grid;
+  grid-template-columns: 64px 320px minmax(0, 1fr);
+  height: 100vh;
+  width: 100vw;
+  background-color: var(--bg-app);
+  overflow: hidden;
+}
+
+@media (max-width: 820px) {
+  .app-shell {
+    grid-template-columns: 1fr;
+    grid-template-rows: 64px 45vh minmax(0, 1fr);
+  }
+}
+
+/* 1. Sidebar Rail (Thanh điều hướng tối giản cực gọn) */
+.sidebar-rail {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--bg-surface);
+  border-right: 1px solid var(--border-subtle);
+  padding: var(--space-4) 0;
+  z-index: 30;
+  box-shadow: var(--shadow-sm);
+}
+
+@media (max-width: 820px) {
+  .sidebar-rail {
+    flex-direction: row;
+    padding: 0 var(--space-4);
+    border-right: none;
+    border-bottom: 1px solid var(--border-subtle);
+    height: 64px;
+    width: 100%;
+  }
+}
+
+.rail-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background-color: var(--accent-color);
+  color: var(--accent-fg);
+  border-radius: var(--radius-md);
+  font-weight: 800;
+  font-size: var(--text-base);
+  margin-bottom: var(--space-8);
+}
+
+@media (max-width: 820px) {
+  .rail-logo {
+    margin-bottom: 0;
+  }
+}
+
+.rail-tabs {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  width: 100%;
+  align-items: center;
+}
+
+@media (max-width: 820px) {
+  .rail-tabs {
+    flex-direction: row;
+    justify-content: center;
+    width: auto;
+  }
+}
+
+.rail-tab-btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  color: var(--text-muted);
+  border-radius: var(--radius-md);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+
+.rail-tab-btn:hover {
+  background-color: var(--bg-hover);
+  color: var(--text-main);
+}
+
+.rail-tab-btn.active {
+  background-color: var(--bg-hover);
+  color: var(--border-focus);
+}
+
+/* Đường chỉ báo bên trái của tab đang được chọn */
+.rail-tab-btn.active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 14px;
+  height: 16px;
+  width: 3px;
+  background-color: var(--border-focus);
+  border-radius: 0 4px 4px 0;
+}
+
+@media (max-width: 820px) {
+  .rail-tab-btn.active::before {
+    left: 14px;
+    bottom: 0;
+    top: auto;
+    height: 3px;
+    width: 16px;
+    border-radius: 4px 4px 0 0;
+  }
+}
+
+.rail-bottom {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  align-items: center;
+}
+
+@media (max-width: 820px) {
+  .rail-bottom {
+    flex-direction: row;
+  }
+}
+
+/* 2. Sidebar Content (Bảng chứa nội dung tab) */
+.sidebar-content {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-surface);
+  border-right: 1px solid var(--border-subtle);
+  overflow: hidden;
+  z-index: 20;
+}
+
+@media (max-width: 820px) {
+  .sidebar-content {
+    border-right: none;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+}
+
+/* Tiêu đề của Tab */
+.content-header {
+  padding: var(--space-5) var(--space-6) var(--space-4) var(--space-6);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.content-title {
+  font-size: var(--text-xl);
+  font-weight: 700;
+  color: var(--text-main);
+  letter-spacing: -0.01em;
+}
+
+.content-subtitle {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  font-weight: 500;
+  margin-top: 2px;
+}
+
+/* Container của các panel */
+.tab-panels {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+}
+
+.tab-panel {
+  display: none;
+  position: absolute;
+  inset: 0;
+  flex-direction: column;
+  padding: var(--space-3) var(--space-5);
+  overflow-y: auto;
+  gap: var(--space-3);
+  animation: tabFadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.tab-panel.active {
+  display: flex;
+}
+
+@keyframes tabFadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* 3. Map Stage (Khu vực bản đồ chính) */
+.map-stage {
+  position: relative;
+  background-color: var(--map-bg);
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+#mapgl {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+#mapCanvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  cursor: grab;
+}
+
+#mapCanvas.maplibre-active {
+  pointer-events: none;
+}
+
+#mapCanvas.dragging {
+  cursor: grabbing;
+}
+
+/* Thanh công cụ phóng to/thu nhỏ dạng Dock nổi */
+.map-toolbar {
+  position: absolute;
+  top: var(--space-5);
+  right: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 4px;
+  box-shadow: var(--shadow-md);
+  z-index: 10;
+}
+
+.basemap-control {
+  position: absolute;
+  top: var(--space-5);
+  left: var(--space-5);
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  max-width: min(320px, calc(100% - 104px));
+  padding: 4px;
+  background-color: rgba(9, 9, 11, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  backdrop-filter: blur(10px);
+}
+
+.theme-light .basemap-control {
+  background-color: rgba(255, 255, 255, 0.86);
+  border-color: rgba(9, 9, 11, 0.1);
+}
+
+.basemap-select {
+  width: 100%;
+  min-width: 190px;
+  max-width: 280px;
+  height: 34px;
+  padding: 0 34px 0 10px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  background-color: var(--bg-surface);
+  color: var(--text-main);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.basemap-select:focus {
+  border-color: var(--border-focus);
+}
+
+@media (max-width: 820px) {
+  .basemap-control {
+    top: var(--space-3);
+    left: var(--space-3);
+    max-width: calc(100% - 84px);
+  }
+
+  .basemap-select {
+    min-width: 150px;
+    max-width: 220px;
+  }
+}
+
+/* Trạng thái hiển thị bản đồ mờ mỏng (Glassmorphism) */
+.map-status {
+  position: absolute;
+  bottom: var(--space-5);
+  left: var(--space-5);
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: 6px var(--space-4);
+  background-color: rgba(9, 9, 11, 0.82); /* zinc-950 đục nhẹ */
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-full);
+  font-size: var(--text-xs);
+  color: #f4f4f5; /* zinc-100 */
+  font-weight: 500;
+  z-index: 10;
+  box-shadow: var(--shadow-sm);
+  pointer-events: none;
+}
+
+.theme-light .map-status {
+  background-color: rgba(255, 255, 255, 0.88);
+  border: 1px solid rgba(9, 9, 11, 0.08);
+  color: #18181b;
+}
+
+.map-attribution {
+  position: absolute;
+  right: var(--space-5);
+  bottom: var(--space-5);
+  z-index: 10;
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  background-color: rgba(9, 9, 11, 0.68);
+  color: #e4e4e7;
+  font-size: 10px;
+  font-weight: 600;
+  pointer-events: none;
+}
+
+.theme-light .map-attribution {
+  background-color: rgba(255, 255, 255, 0.78);
+  color: #3f3f46;
+}
+
+/* Theme Switch Sliding Toggle Button */
+.theme-switch-btn {
+  position: relative;
+  width: 44px;
+  height: 22px;
+  background-color: var(--bg-hover);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  padding: 1px;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  align-items: center;
+}
+
+.theme-switch-btn:hover {
+  border-color: var(--text-muted);
+}
+
+.theme-switch-thumb {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  background-color: var(--text-main);
+  color: var(--bg-surface);
+  border-radius: var(--radius-full);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateX(0); /* Default dark mode */
+}
+
+.theme-light .theme-switch-thumb {
+  transform: translateX(22px);
+}
+
+.theme-switch-thumb svg {
+  width: 12px;
+  height: 12px;
+}
+
+.theme-switch-thumb .sun-icon {
+  display: none;
+}
+
+.theme-switch-thumb .moon-icon {
+  display: block;
+}
+
+.theme-light .theme-switch-thumb .sun-icon {
+  display: block;
+}
+
+.theme-light .theme-switch-thumb .moon-icon {
+  display: none;
+}
+
+/* 4. Top Left Controls & Quick Share */
+.map-top-left-controls {
+  position: absolute;
+  top: var(--space-5);
+  left: var(--space-5);
+  z-index: 10;
+  display: flex;
+  gap: var(--space-2);
+  align-items: center;
+  max-width: calc(100% - 120px);
+}
+
+@media (max-width: 820px) {
+  .map-top-left-controls {
+    top: var(--space-3);
+    left: var(--space-3);
+    max-width: calc(100% - 84px);
+  }
+}
+
+.map-top-left-controls .basemap-control {
+  position: static;
+}
+
+.share-dot {
+  width: 8px;
+  height: 8px;
+  background-color: #ef4444; /* red when inactive */
+  border-radius: 50%;
+  display: inline-block;
+  transition: all 0.3s ease;
+}
+
+.share-dot.active {
+  background-color: #22c55e; /* green when active */
+  box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+  animation: pulse-green 1.5s infinite;
+}
+
+@keyframes pulse-green {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+  }
+  70% {
+    transform: scale(1.1);
+    box-shadow: 0 0 0 6px rgba(34, 197, 94, 0);
+  }
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
+  }
+}

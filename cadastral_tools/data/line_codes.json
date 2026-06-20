@@ -1,0 +1,42 @@
+{
+  "RANH_TINH": {
+    "name_vi": "Ranh giới Tỉnh",
+    "group": "Ranh giới",
+    "fill_color": "#ff0000",
+    "border_width_mm": 0.8,
+    "pattern": "dash dot",
+    "source": "Quy định chuẩn"
+  },
+  "RANH_HUYEN": {
+    "name_vi": "Ranh giới Huyện",
+    "group": "Ranh giới",
+    "fill_color": "#ff00ff",
+    "border_width_mm": 0.6,
+    "pattern": "dash dot dot",
+    "source": "Quy định chuẩn"
+  },
+  "RANH_XA": {
+    "name_vi": "Ranh giới Xã",
+    "group": "Ranh giới",
+    "fill_color": "#0000ff",
+    "border_width_mm": 0.4,
+    "pattern": "dash",
+    "source": "Quy định chuẩn"
+  },
+  "GIAO_THONG": {
+    "name_vi": "Đường giao thông",
+    "group": "Giao thông",
+    "fill_color": "#ffaa00",
+    "border_width_mm": 0.5,
+    "pattern": "solid",
+    "source": "Quy định chuẩn"
+  },
+  "THUY_HE": {
+    "name_vi": "Thủy hệ (Sông ngòi)",
+    "group": "Thủy hệ",
+    "fill_color": "#00aaff",
+    "border_width_mm": 0.3,
+    "pattern": "solid",
+    "source": "Quy định chuẩn"
+  }
+}

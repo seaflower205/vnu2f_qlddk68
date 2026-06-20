@@ -1,0 +1,85 @@
+name: topology-tools CI
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'tools/libraries/topology-tools/**'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'tools/libraries/topology-tools/**'
+  workflow_dispatch:
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+jobs:
+  test:
+    name: Test on Python ${{ matrix.python-version }} (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ ubuntu-latest, windows-latest ]
+        python-version: [ '3.10', '3.11', '3.12', '3.13' ]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install build pytest
+          pip install "shapely>=2.0"
+
+      - name: Install topology-tools (editable mode)
+        run: |
+          pip install -e tools/libraries/topology-tools
+
+      - name: Run test suite
+        run: |
+          python -m pytest tools/libraries/topology-tools/tests/ -v
+
+  build-wheel:
+    name: Build & Verify Wheel
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install build tool
+        run: |
+          python -m pip install --upgrade pip
+          pip install build
+
+      - name: Build wheel
+        run: |
+          python -m build tools/libraries/topology-tools/ --outdir tools/libraries/topology-tools/dist/
+
+      - name: Verify wheel installation in fresh environment
+        run: |
+          python -m venv test_env
+          test_env/bin/pip install --upgrade pip
+          test_env/bin/pip install "shapely>=2.0"
+          test_env/bin/pip install tools/libraries/topology-tools/dist/*.whl
+          test_env/bin/python -c "import topology_tools; print(topology_tools.__version__)"
+
+      - name: Upload wheel artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: topology-tools-wheel
+          path: tools/libraries/topology-tools/dist/*.whl
+          retention-days: 30

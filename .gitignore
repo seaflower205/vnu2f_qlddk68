@@ -1,0 +1,74 @@
+# Python cache and build artifacts
+__pycache__/
+*.pyc
+*.pyo
+.eggs/
+*.egg-info/
+dist/
+build/
+*.py[cod]
+*$py.class
+*.bak
+.coverage
+
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# QGIS and GIS data files (sensitive land parcel data)
+*.geojson
+*.shp
+*.shx
+*.dbf
+*.prj
+*.gpkg
+*.qgs
+*.qgz
+qgis.db
+symbology-style.db
+webgis_demo/data/parcels.geojson
+
+# Scratch and temporary folders
+scratch/
+cache/
+*.log
+*.tmp
+
+# Environment and credential files
+.env
+*.key
+*.pem
+secrets.json
+
+# Windows system files
+Thumbs.db
+desktop.ini
+
+# IDE files
+.vscode/
+.idea/
+.agents/
+.ruff_cache/
+
+# Rust (CAD Reader)
+tools/cad_reader_rs/target/
+tools/cad_reader_rs/Cargo.lock
+tools/libraries/topology-tools/bin/cad_reader_windows.exe
+
+# Internal agent notes & screenshots
+ANTIGRAVITY_NOTES.md
+ANTIGRAVITY_PROJECT_MAP.md
+SKILL.md
+codebase_map.md
+cad_import_research.md
+walkthrough.md
+dialog_with_history_btn.png
+history_dialog_screenshot.png
+
+# Other generated and backup folders
+backup_modules_*/
+.qgis-settings/
+.pytest_cache/
+.mypy_cache/
