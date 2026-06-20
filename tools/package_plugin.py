@@ -8,6 +8,7 @@ are intentionally excluded so QGIS/Antigravity does not pick up stale code.
 Usage:
     python tools/package_plugin.py              # Build ZIP
     python tools/package_plugin.py --dry-run    # List files only, don't create ZIP
+    python tools/package_plugin.py --check      # Validate packaging gates only
 """
 
 from __future__ import annotations
@@ -181,6 +182,40 @@ def _is_runtime_file(path: Path, root: Path) -> bool:
     return parts[0] in WHITELIST_DIRS
 
 
+def _validate_code_graph(root: Path) -> dict[str, object]:
+    """Build and validate the source-derived runtime dependency graph."""
+    try:
+        rules = load_rules()
+        graph = build_graph(root, rules)
+    except (OSError, ValueError, SyntaxError) as exc:
+        raise RuntimeError(f"Code graph could not be built: {exc}") from exc
+    violations = validate_graph(graph, rules)
+    if violations:
+        details = "\n  - ".join(violations)
+        raise RuntimeError(f"Code graph check failed; package refused:\n  - {details}")
+    return graph
+
+
+def _collect_manifest_entries(root: Path) -> list[str]:
+    """Return sorted runtime files that would be included in the plugin ZIP."""
+    manifest_entries: list[str] = []
+    for path in sorted(root.rglob("*")):
+        if not path.is_file() or not _is_runtime_file(path, root):
+            continue
+        manifest_entries.append(path.relative_to(root).as_posix())
+    return manifest_entries
+
+
+def check_package(root: Path) -> None:
+    """Validate package gates without creating dist files or a ZIP archive."""
+    graph = _validate_code_graph(root)
+    manifest_entries = _collect_manifest_entries(root)
+    if not manifest_entries:
+        raise RuntimeError("Package check failed: no runtime files would be included.")
+    print(f"  Code graph check passed ({len(graph['nodes'])} modules)")
+    print(f"  Package check passed ({len(manifest_entries)} runtime files)")
+
+
 def build_package(root: Path, *, dry_run: bool = False) -> Path | None:
     """Build the plugin ZIP archive.
 
@@ -191,15 +226,7 @@ def build_package(root: Path, *, dry_run: bool = False) -> Path | None:
     Returns:
         Path to the created ZIP, or None if dry_run.
     """
-    try:
-        rules = load_rules()
-        graph = build_graph(root, rules)
-    except (OSError, ValueError, SyntaxError) as exc:
-        raise RuntimeError(f"Code graph could not be built: {exc}") from exc
-    violations = validate_graph(graph, rules)
-    if violations:
-        details = "\n  - ".join(violations)
-        raise RuntimeError(f"Code graph check failed; package refused:\n  - {details}")
+    graph = _validate_code_graph(root)
     print(f"  Code graph check passed ({len(graph['nodes'])} modules)")
 
     dist_dir = root / "dist"
@@ -208,15 +235,8 @@ def build_package(root: Path, *, dry_run: bool = False) -> Path | None:
     manifest_path = dist_dir / "package_manifest.txt"
 
     # Collect files
-    manifest_entries: list[str] = []
-    file_count = 0
-
-    for path in sorted(root.rglob("*")):
-        if not path.is_file() or not _is_runtime_file(path, root):
-            continue
-        rel = path.relative_to(root)
-        manifest_entries.append(rel.as_posix())
-        file_count += 1
+    manifest_entries = _collect_manifest_entries(root)
+    file_count = len(manifest_entries)
 
     # ── Dry-run mode ──
     if dry_run:
@@ -299,15 +319,24 @@ def main() -> int:
     parser = argparse.ArgumentParser(
         description="Build a clean QGIS plugin zip (Strict Whitelist)."
     )
-    parser.add_argument(
+    mode = parser.add_mutually_exclusive_group()
+    mode.add_argument(
         "--dry-run",
         action="store_true",
         help="List files to include without creating the ZIP archive.",
+    )
+    mode.add_argument(
+        "--check",
+        action="store_true",
+        help="Validate package gates without creating dist files or a ZIP archive.",
     )
     args = parser.parse_args()
 
     root = Path(__file__).resolve().parents[1]
     try:
+        if args.check:
+            check_package(root)
+            return 0
         result = build_package(root, dry_run=args.dry_run)
     except RuntimeError as exc:
         print(f"ERROR: {exc}", file=sys.stderr)

@@ -4,10 +4,9 @@ from __future__ import annotations
 from .cad_reader import find_cad_path
 from .layer_runtime import add_generated_layer, remove_previous_generated_layers
 from .sync_layers import _create_aux_layer, _create_parcel_layer, _make_aux_feature, _make_parcel_feature
-from .sync_matching import _best_match, _index_record, _make_sync_index, _match_sync, _read_cad_features
+from .sync_matching import _make_sync_index, _match_sync, _read_cad_features
 from .sync_models import ImportIssue, SyncImportResult
-from .sync_sources import _fetch_gtp_records, _load_gtp_records, _load_pol_records, _load_shp_records, _load_xml_records
-from .sync_utils import *  # compatibility re-exports
+from .sync_sources import _load_gtp_records, _load_pol_records, _load_shp_records, _load_xml_records
 from .texts import cadastral_text as tx
 
 def import_cadastral_group(

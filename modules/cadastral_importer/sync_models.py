@@ -2,6 +2,8 @@
 """Result models for synchronized cadastral imports."""
 from dataclasses import dataclass, field
 
+
+@dataclass
 class ImportIssue:
     level: str
     message: str

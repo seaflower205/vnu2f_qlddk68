@@ -1,6 +1,9 @@
 """Architecture contract backed by the source-derived runtime code graph."""
 
+from pathlib import Path
+
 from tools.analyze_code_graph import build_graph, load_rules, validate_graph
+from tools.package_plugin import check_package
 
 
 def test_runtime_dependency_graph_obeys_architecture_rules():
@@ -40,3 +43,24 @@ def test_validator_rejects_new_cycle_core_ui_orphan_and_missing_api():
     assert any("core -> ui" in error for error in errors)
     assert any("Orphan runtime module: pkg.orphan" in error for error in errors)
     assert any("PublicFacade" in error for error in errors)
+
+
+def test_package_check_is_read_only_for_dist_outputs():
+    root = Path(__file__).resolve().parents[1]
+    dist_dir = root / "dist"
+    before_exists = dist_dir.exists()
+    before = {
+        path.relative_to(dist_dir).as_posix(): path.stat().st_mtime_ns
+        for path in dist_dir.rglob("*")
+        if path.is_file()
+    } if before_exists else {}
+
+    check_package(root)
+
+    assert dist_dir.exists() == before_exists
+    after = {
+        path.relative_to(dist_dir).as_posix(): path.stat().st_mtime_ns
+        for path in dist_dir.rglob("*")
+        if path.is_file()
+    } if dist_dir.exists() else {}
+    assert after == before
