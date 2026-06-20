@@ -72,3 +72,9 @@ backup_modules_*/
 .qgis-settings/
 .pytest_cache/
 .mypy_cache/
+logs/
+tests/visual_logs/
+tests/qa_report_*.md
+AGENTS.md
+SKILL_qgis_qa_tester.md
+

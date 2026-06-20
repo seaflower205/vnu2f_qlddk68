@@ -14,7 +14,7 @@
 
 ---
 
-## 🌟 Giới thiệu
+## Giới thiệu
 
 **VNU2F QLDDK68** là một plugin mã nguồn mở được phát triển riêng cho phần mềm QGIS, tối ưu hóa toàn diện cho các tác vụ chuyên ngành Trắc địa và Quản lý đất đai tại Việt Nam.
 
@@ -22,30 +22,30 @@ Với mục tiêu tự động hóa và nâng cao độ chính xác, plugin cung
 
 ---
 
-## 🚀 Tính năng nổi bật
+## Tính năng nổi bật
 
-### 🗺️ Xử lý Không gian & Tọa độ
+### Xử lý Không gian & Tọa độ
 - **Chuyển đổi VN-2000:** Chuyển đổi linh hoạt giữa hệ tọa độ WGS-84 và hệ tọa độ VN-2000 nội bộ các tỉnh thành (chuẩn 7 tham số).
 - **Rải điểm tọa độ:** Hỗ trợ đọc tọa độ từ file văn bản/Excel và vẽ điểm/đường ranh giới lên bản đồ nhanh chóng.
 - **Sửa lỗi hình học (Topology):** Tự động phát hiện và sửa các lỗi ranh thửa, tự động khép vùng (sử dụng thư viện `shapely`).
 
-### 📐 Nhập/Xuất Dữ liệu Địa chính
+### Nhập/Xuất Dữ liệu Địa chính
 - **Import đa định dạng:** Hỗ trợ nhập liệu đồng bộ từ các tệp `SHP`, `POL`, `GTP`, `CAD` (`DXF`, `DWG`, `DGN`).
 - **DXF Nâng cao:** Đọc và ghi bản vẽ CAD DXF nâng cao, bảo toàn và trích xuất hoàn chỉnh **Block Attributes** cùng **XData** (sử dụng thư viện `ezdxf`).
 - **Chuyển mã Font:** Tự động phát hiện và hỏi chuyển đổi font chữ tiếng Việt từ `TCVN3` / `VNI` sang `Unicode` chuẩn khi nhập dữ liệu.
 
-### 📊 Báo cáo & Thống kê
+### Báo cáo & Thống kê
 - **Xuất Excel Chuẩn Thông tư:** Tự động trích xuất thông tin không gian và thuộc tính thửa đất, xuất ra biểu mẫu Excel chuẩn Thông tư `10/2024/TT-BTNMT` và `08/2024/TT-BTNMT` của Bộ TN&MT (sử dụng thư viện `openpyxl`).
 - **Biểu đồ & Thống kê:** Phân tích cơ cấu loại đất, thống kê diện tích tự động.
 
-### 🌐 WebGIS Tích hợp
+### WebGIS Tích hợp
 - **WebGIS Demo & 3D:** Khởi tạo nhanh máy chủ WebGIS cục bộ để trực quan hóa dữ liệu không gian dưới dạng 2D/3D.
 - **Đo đạc & Tìm kiếm:** Tích hợp công cụ đo đạc địa chí, tìm kiếm địa chỉ Nominatim Việt Nam, và reverse geocoding địa chỉ từ tọa độ.
 - **Đồng bộ hóa:** WebGIS tự động trích xuất dữ liệu từ lớp polygon đang được chọn trên QGIS để hiển thị tức thì.
 
 ---
 
-## 💻 Yêu cầu hệ thống
+## Yêu cầu hệ thống
 
 - **Hệ điều hành:** Windows 10/11, macOS, hoặc Linux.
 - **Phần mềm:** QGIS phiên bản **4.0** trở lên.
@@ -54,7 +54,7 @@ Với mục tiêu tự động hóa và nâng cao độ chính xác, plugin cung
 
 ---
 
-## 🛠️ Hướng dẫn Cài đặt
+## Hướng dẫn Cài đặt
 
 ### Cách 1: Cài đặt từ file ZIP (Khuyên dùng)
 1. Truy cập trang [Releases](https://github.com/seaflower205/vnu2f_qlddk68/releases).
@@ -75,7 +75,7 @@ Với mục tiêu tự động hóa và nâng cao độ chính xác, plugin cung
 
 ---
 
-## 📖 Hướng dẫn sử dụng nhanh
+## Hướng dẫn sử dụng nhanh
 
 1. **Thanh công cụ (Toolbar):** Sau khi cài đặt, bạn sẽ thấy các biểu tượng công cụ của plugin xuất hiện trên thanh công cụ QGIS.
 2. **Thanh Menu:** Truy cập `Plugins` -> `VNU2F QLDDK68` để mở bảng điều khiển chính.
@@ -88,7 +88,7 @@ Với mục tiêu tự động hóa và nâng cao độ chính xác, plugin cung
 
 ---
 
-## 👨‍💻 Phát triển & Đóng góp
+## Phát triển & Đóng góp
 
 Dự án là mã nguồn mở, chúng tôi luôn hoan nghênh các đóng góp từ cộng đồng (Issues, Pull Requests).
 
@@ -97,7 +97,7 @@ Dự án sử dụng GitHub Actions, bạn có thể trigger workflow **"Package
 
 ---
 
-## 📜 Giấy phép (License)
+## Giấy phép (License)
 
 Dự án được phân phối dưới giấy phép [GNU GPLv3](https://opensource.org/licenses/GPL-3.0). Mọi sửa đổi và phân phối lại mã nguồn phải tuân thủ điều khoản của giấy phép này.
 

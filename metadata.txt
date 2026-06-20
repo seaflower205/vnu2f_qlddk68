@@ -3,7 +3,7 @@
 name=VNU2F QLDDK68
 qgisMinimumVersion=4.0
 description=Bộ công cụ trắc địa - địa chính Việt Nam toàn diện: Chuyển đổi VN-2000, xử lý font chữ, sửa lỗi ranh thửa (shapely), xuất Excel chuẩn TT 10/2024 (openpyxl), DXF nâng cao (ezdxf) và WebGIS 3D/Search/Measure.
-version=0.3.0
+version=1.0.0
 author=VNU2F
 email=vnu2f@example.com
 about=Bộ công cụ mã nguồn mở tối ưu cho trắc địa - địa chính Việt Nam. Hỗ trợ: chuyển đổi hệ tọa độ VN-2000 chuẩn 7 tham số, chuyển mã font tiếng Việt, rải điểm tọa độ, sửa lỗi hình học ranh thửa tự động, xuất báo cáo địa chính chuẩn Thông tư 10/2024/TT-BTNMT, nhập/xuất bản vẽ CAD DXF nâng cao trích xuất XData/Block Attributes, mở WebGIS demo tích hợp xem 3D, đo đạc địa chí và tìm kiếm Nominatim Việt Nam.
@@ -15,4 +15,4 @@ category=Analysis
 icon=icon.png
 experimental=True
 deprecated=False
-changelog=0.3.0 - Nâng cấp toàn diện: Sửa lỗi ranh thửa & khép vùng tự động (shapely), Xuất báo cáo địa chính Excel chuẩn Thông tư 10/2024/TT-BTNMT (openpyxl), Nhập/Xuất bản vẽ DXF nâng cao trích xuất block attributes/XData (ezdxf), nâng cấp WebGIS với đo đạc địa chí, tìm kiếm Nominatim VN, reverse geocoding địa chỉ và chế độ xem 3D; 0.2.3 - Thêm import đồng bộ SHP/POL/GTP/CAD, hỏi chuyển TCVN3/ABC sang Unicode khi import SHP, dọn layer CAD cũ và bật render simplification để giảm giật khi pan/drag; 0.2.2 - WebGIS lấy layer polygon đang chọn trong QGIS để xuất và mở; 0.2.1 - Thêm nút mở WebGIS quản lý thửa đất demo từ plugin QGIS; 0.2.0 - Tách common/tabs, thêm importer địa chính DXF/DGN/DWG/GTP/POL và đóng gói sạch runtime; 0.1.0 - Module chuyển đổi hệ tọa độ VN-2000
+changelog=1.0.0 - Phát hành phiên bản chính thức đầu tiên: Bộ công cụ Trắc địa - Địa chính Việt Nam toàn diện cho QGIS.
